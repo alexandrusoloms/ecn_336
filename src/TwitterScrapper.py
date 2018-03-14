@@ -38,7 +38,6 @@ class Twitter(object):
 
         while True:
             html = driver.page_source
-            print len(html)
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             time.sleep(6)
             html2 = driver.page_source
@@ -69,13 +68,18 @@ class Twitter(object):
         """
         this is the method which runs it all
         """
-        for mp in self.__twitter_names[:1]:
-            mp_name = self.get_mp_name(mp)
-            twitter_url = self.construct_twitter_url(mp)
-            print mp_name, twitter_url
-            data = self.get_data(twitter_url)
-            self.writer(data=data, name_of_mp=mp_name)
-            time.sleep(20)  # sleep 20 secs until continuing
+        for mp in self.__twitter_names:
+            try:
+                mp_name = self.get_mp_name(mp)
+                twitter_url = self.construct_twitter_url(mp)
+                data = self.get_data(twitter_url)
+                self.writer(data=data, name_of_mp=mp_name)
+                time.sleep(20)  # sleep 20 secs until continuing
+            # logging exceptions
+            except Exception as e:
+                with open(self.__output_path + 'exceptions.txt', 'a') as handle:
+                    handle.write(e.encode("ascii", 'ignore'))
+
 
 if __name__ == '__main__':
     Twitter().main()
