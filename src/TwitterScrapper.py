@@ -63,7 +63,7 @@ class Twitter(object):
         :name_of_mp i.e.: theresamay:
         """
         with open(self.__output_path + name_of_mp + '.txt', 'wb') as handle:
-            handle.write(html.encode("ascii", 'ignore'))
+            handle.write(data.encode("ascii", 'ignore'))
 
     def main(self):
         """
