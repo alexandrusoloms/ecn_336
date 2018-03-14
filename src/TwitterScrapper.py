@@ -54,6 +54,7 @@ class Twitter(object):
     def get_mp_name(mp):
         return mp.replace('@', '').strip()
 
+    @staticmethod
     def writer(data, name_of_mp):
         """
         this will save the file to the output_path
@@ -65,10 +66,10 @@ class Twitter(object):
             handle.write(html.encode("ascii", 'ignore'))
 
 
-
-
-
     def main(self):
+        """
+        this is the method which runs it all 
+        """
         for mp in self.__twitter_names[:1]:
             mp_name = self.get_mp_name(mp)
             twitter_url = self.construct_twitter_url(mp)
