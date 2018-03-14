@@ -13,7 +13,7 @@ class Twitter(object):
 
     def __init__(self):
         self.__data_path = os.path.join(os.path.dirname('__file__'), '..', ) + '/data/'
-        self.__data_path = os.path.join(os.path.dirname('__file__'), '..', ) + '/output/'
+        self.__output_path = os.path.join(os.path.dirname('__file__'), '..', ) + '/output/'
         self.__twitter_names = pd.read_csv(self.__data_path + 'MP_df.csv')
         self.__twitter_names = self.__twitter_names['twitter_name'].values
 
