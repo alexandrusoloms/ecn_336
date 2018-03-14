@@ -13,6 +13,7 @@ class Twitter(object):
 
     def __init__(self):
         self.__data_path = os.path.join(os.path.dirname('__file__'), '..', ) + '/data/'
+        self.__data_path = os.path.join(os.path.dirname('__file__'), '..', ) + '/output/'
         self.__twitter_names = pd.read_csv(self.__data_path + 'MP_df.csv')
         self.__twitter_names = self.__twitter_names['twitter_name'].values
 
@@ -42,7 +43,7 @@ class Twitter(object):
             time.sleep(6)
             html2 = driver.page_source
 
-            if len(html) > 2500000:  # if I reached the botttom, break
+            if len(html) > 2500000:  # chosen so to not run out of memory
                driver.close()
                driver.service.process.send_signal(signal.SIGTERM)
                driver.quit()
@@ -52,7 +53,7 @@ class Twitter(object):
 
     @staticmethod
     def get_mp_name(mp):
-        return mp.replace('@', '').strip()
+        return mp.replace('@', '').strip().lower()
 
     def writer(self, data, name_of_mp):
         """
@@ -64,7 +65,6 @@ class Twitter(object):
         with open(self.__output_path + name_of_mp + '.txt', 'wb') as handle:
             handle.write(html.encode("ascii", 'ignore'))
 
-
     def main(self):
         """
         this is the method which runs it all
@@ -75,7 +75,7 @@ class Twitter(object):
             print mp_name, twitter_url
             data = self.get_data(twitter_url)
             self.writer(data=data, name_of_mp=mp_name)
-            time.sleep(30)  # sleep 30 secs until continuing
+            time.sleep(20)  # sleep 20 secs until continuing
 
 if __name__ == '__main__':
     Twitter().main()
