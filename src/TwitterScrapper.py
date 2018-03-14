@@ -24,6 +24,7 @@ class Twitter(object):
         tw_name = tw_name.replace('@', '').strip()
         return 'https://twitter.com/{}'.format(tw_name)
 
+    @staticmethod
     def get_data(url_link):
         """
         scrolling down until a html size of 2500000
