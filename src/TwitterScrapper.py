@@ -12,8 +12,8 @@ import signal
 class Twitter(object):
 
     def __init__(self):
-        self.__data_path = '/home/pi/Desktop/mariussolomes/scrapers/twitter/ecn_336/ecn_336/data/'
-        self.__output_path = '/home/pi/Desktop/mariussolomes/scrapers/twitter/ecn_336/ecn_336/output/'
+        self.__data_path = os.path.join(os.path.dirname('__file__'), '..', ) + '/data/'
+        self.__output_path = os.path.join(os.path.dirname('__file__'), '..', ) + '/output/'
         self.__twitter_names = pd.read_csv(self.__data_path + 'MP_df.csv')
         self.__twitter_names = self.__twitter_names['twitter_name'].values
 
