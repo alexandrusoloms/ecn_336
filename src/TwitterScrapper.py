@@ -14,9 +14,9 @@ class Twitter(object):
 
     def __init__(self):
         # for set_random_sleep
-        self.MINIMUM = 3
+        self.MINIMUM = 2
         self.SD = 1
-        self.MEAN = 4
+        self.MEAN = 2.65
         # paths and loading data
         self.__data_path = os.path.join(os.path.dirname('__file__'), '..', ) + '/data/'
         self.__output_path = os.path.join(os.path.dirname('__file__'), '..', ) + '/output/'
@@ -47,8 +47,7 @@ class Twitter(object):
             sleep_time = self.MINIMUM
         time.sleep(sleep_time)
 
-    @staticmethod
-    def get_data(url_link):
+    def get_data(self, url_link):
         """
         scrolling down until a html size of 2500000
         """
@@ -101,6 +100,7 @@ class Twitter(object):
             except Exception as e:
                 with open(self.__output_path + 'exceptions.txt', 'a') as handle:
                     handle.write(str(e))
+                self.set_random_sleep()
 
 
 if __name__ == '__main__':
