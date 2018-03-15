@@ -1,0 +1,2 @@
+Message: 'geckodriver' executable needs to be in PATH. 
+[Errno 20] Not a directoryMessage: Unable to find a matching set of capabilities
