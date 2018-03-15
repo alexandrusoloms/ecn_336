@@ -68,7 +68,7 @@ class Twitter(object):
         """
         this is the method which runs it all
         """
-        for mp in self.__twitter_names:
+        for mp in self.__twitter_names[:1]:
             try:
                 mp_name = self.get_mp_name(mp)
                 twitter_url = self.construct_twitter_url(mp)
