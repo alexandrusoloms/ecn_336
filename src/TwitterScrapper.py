@@ -42,7 +42,7 @@ class Twitter(object):
             time.sleep(6)
             html2 = driver.page_source
 
-            if len(html) > 2500000:  # chosen so to not run out of memory
+            if len(html) == len(html2):
                driver.close()
                driver.service.process.send_signal(signal.SIGTERM)
                driver.quit()
@@ -68,8 +68,7 @@ class Twitter(object):
         """
         this is the method which runs it all
         """
-        for mp in self.__twitter_names[:1]:
-            print mp
+        for mp in self.__twitter_names:
             try:
                 mp_name = self.get_mp_name(mp)
                 twitter_url = self.construct_twitter_url(mp)
