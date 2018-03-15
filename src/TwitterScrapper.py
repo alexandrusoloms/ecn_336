@@ -2,6 +2,7 @@ import os
 
 import time
 import pandas as pd
+import numpy as np
 from bs4 import BeautifulSoup
 from selenium import webdriver
 #from pyvirtualdisplay import Display
@@ -12,10 +13,18 @@ import signal
 class Twitter(object):
 
     def __init__(self):
+        # for set_random_sleep
+        self.MINIMUM = 3
+        self.SD = 1
+        self.MEAN = 4
+        # paths and loading data
         self.__data_path = os.path.join(os.path.dirname('__file__'), '..', ) + '/data/'
         self.__output_path = os.path.join(os.path.dirname('__file__'), '..', ) + '/output/'
         self.__twitter_names = pd.read_csv(self.__data_path + 'MP_df.csv')
         self.__twitter_names = self.__twitter_names['twitter_name'].values
+
+
+
 
     @staticmethod
     def construct_twitter_url(tw_name):
@@ -24,6 +33,19 @@ class Twitter(object):
         """
         tw_name = tw_name.replace('@', '').strip()
         return 'https://twitter.com/{}'.format(tw_name)
+
+    def set_random_sleep(self):
+        """
+        A method wich generates a random number conditioned on:
+            - a mean of 'MEAN'
+            - standard deviation of 'SD' and
+            - a minimum of 'MINIMUM'
+        It then time.sleep(s) for the random number generated
+        """
+        sleep_time = np.random.randn(1) * self.SD + self.MEAN
+        if sleep_time < self.MINIMUM:
+            sleep_time = self.MINIMUM
+        time.sleep(sleep_time)
 
     @staticmethod
     def get_data(url_link):
@@ -39,7 +61,7 @@ class Twitter(object):
         while True:
             html = driver.page_source
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(6)
+            self.set_random_sleep()
             html2 = driver.page_source
 
             if len(html) == len(html2):
@@ -74,7 +96,7 @@ class Twitter(object):
                 twitter_url = self.construct_twitter_url(mp)
                 data = self.get_data(twitter_url)
                 self.writer(data=data, name_of_mp=mp_name)
-                time.sleep(20)  # sleep 20 secs until continuing
+                self.set_random_sleep()
             # logging exceptions
             except Exception as e:
                 with open(self.__output_path + 'exceptions.txt', 'a') as handle:
