@@ -4,7 +4,7 @@ import time
 import pandas as pd
 from bs4 import BeautifulSoup
 from selenium import webdriver
-from pyvirtualdisplay import Display
+#from pyvirtualdisplay import Display
 import signal
 
 
@@ -31,9 +31,9 @@ class Twitter(object):
         scrolling down until a html size of 2500000
         """
         url = url_link
-        display = Display(visible=0, size=(1024, 768))
-        display.start()
-        driver = webdriver.Firefox()
+        #display = Display(visible=0, size=(1024, 768))
+        #display.start()
+        driver = webdriver.Chrome('../chromedriver 2')
         driver.get(url)
 
         while True:
@@ -46,7 +46,7 @@ class Twitter(object):
                driver.close()
                driver.service.process.send_signal(signal.SIGTERM)
                driver.quit()
-               display.stop()
+              # display.stop()
                return html
                break
 
@@ -69,6 +69,7 @@ class Twitter(object):
         this is the method which runs it all
         """
         for mp in self.__twitter_names[:1]:
+            print mp
             try:
                 mp_name = self.get_mp_name(mp)
                 twitter_url = self.construct_twitter_url(mp)
