@@ -78,7 +78,7 @@ class Twitter(object):
             # logging exceptions
             except Exception as e:
                 with open(self.__output_path + 'exceptions.txt', 'a') as handle:
-                    handle.write(e.encode("ascii", 'ignore'))
+                    handle.write(str(e))
 
 
 if __name__ == '__main__':
